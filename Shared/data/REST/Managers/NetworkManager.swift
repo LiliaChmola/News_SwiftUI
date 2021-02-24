@@ -16,6 +16,7 @@ class NetworkManager {
     
     private let baseURL = "https://newsapi.org/v2"
     private let apiKey = "1e6671c6dc4042459b3a72e0906d707c"
+    private let pageSize = "20"
     
     func fetchNewsWith(keywords: String,
                        sortBy: SortBy,
@@ -23,11 +24,11 @@ class NetworkManager {
                        compeltion: @escaping (Result<[News], Error>) -> Void) {
 
         var q = keywords
-        if q.count == 0 { // it is requeired field, if is empty we use default value
+        if q.isEmpty { // it is requeired field, if is empty we use default value
             q = "News" // - default value
         }
         
-        let url = "\(baseURL)/everything?q=\(q)&sortBy=\(sortBy.rawValue)&pageSize=20&page=\(page)&apiKey=\(apiKey)"
+        let url = "\(baseURL)/everything?q=\(q)&sortBy=\(sortBy.rawValue)&pageSize=\(pageSize)&page=\(page)&apiKey=\(apiKey)"
     
         AF.request(url)
             .responseJSON { response in
